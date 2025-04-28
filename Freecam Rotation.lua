@@ -5,6 +5,7 @@ local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
 local freecamEnabled = false
+local cursorUnlocked = false
 
 local moveSpeed = 20
 local mouseSensitivity = 0.2
@@ -70,6 +71,15 @@ UserInputService.InputBegan:Connect(function(input, processed)
             moveVector = moveVector + Vector3.new(0, -1, 0)
         end
     end
+
+    if input.KeyCode == Enum.KeyCode.V then
+        cursorUnlocked = not cursorUnlocked
+        if cursorUnlocked then
+            unlockMouse()
+        else
+            lockMouse()
+        end
+    end
 end)
 
 UserInputService.InputEnded:Connect(function(input, processed)
@@ -101,7 +111,6 @@ end)
 
 RunService.RenderStepped:Connect(function(deltaTime)
     if freecamEnabled then
-            
         if rollingLeft then
             roll = roll + rollSpeed * deltaTime
         elseif rollingRight then
