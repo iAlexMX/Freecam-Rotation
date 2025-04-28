@@ -3,6 +3,7 @@ Freecam Rotation
 Este script habilita un modo de cámara libre en Roblox, permitiendo controlar la cámara sin mover al personaje. A continuación se detallan las teclas y funciones:
 
 Keybinds:
+
 C: Activa/desactiva el modo freecam.
 
 V: Desbloquea/lockea el cursor.
