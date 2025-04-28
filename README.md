@@ -1,4 +1,4 @@
-Freecam Rotation
+Freecam Cinematic
 
 Este script habilita un modo de cámara libre en Roblox, permitiendo controlar la cámara sin mover al personaje. A continuación se detallan las teclas y funciones:
 
