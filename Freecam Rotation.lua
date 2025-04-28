@@ -8,9 +8,13 @@ local freecamEnabled = false
 
 local moveSpeed = 20
 local mouseSensitivity = 0.2
+local rollSpeed = 60
 
 local moveVector = Vector3.new()
 local rotation = Vector2.new()
+local roll = 0
+local rollingLeft = false
+local rollingRight = false
 
 local character
 local humanoidRootPart
@@ -37,7 +41,6 @@ UserInputService.InputBegan:Connect(function(input, processed)
         if freecamEnabled then
             Camera.CameraType = Enum.CameraType.Scriptable
             lockMouse()
-
             character = player.Character
             if character then
                 humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
@@ -46,35 +49,39 @@ UserInputService.InputBegan:Connect(function(input, processed)
         else
             Camera.CameraType = Enum.CameraType.Custom
             unlockMouse()
-
             setCharacterAnchored(false)
         end
-    end
-end)
-
-UserInputService.InputBegan:Connect(function(input, processed)
-    if processed or not freecamEnabled then return end
-    if input.KeyCode == Enum.KeyCode.W then
-        moveVector = moveVector + Vector3.new(0, 0, -1)
-    elseif input.KeyCode == Enum.KeyCode.S then
-        moveVector = moveVector + Vector3.new(0, 0, 1)
-    elseif input.KeyCode == Enum.KeyCode.A then
-        moveVector = moveVector + Vector3.new(-1, 0, 0)
-    elseif input.KeyCode == Enum.KeyCode.D then
-        moveVector = moveVector + Vector3.new(1, 0, 0)
-    elseif input.KeyCode == Enum.KeyCode.E then
-        moveVector = moveVector + Vector3.new(0, 1, 0)
-    elseif input.KeyCode == Enum.KeyCode.Q then
-        moveVector = moveVector + Vector3.new(0, -1, 0)
+    elseif freecamEnabled then
+        if input.KeyCode == Enum.KeyCode.Z then
+            rollingLeft = true
+        elseif input.KeyCode == Enum.KeyCode.X then
+            rollingRight = true
+        elseif input.KeyCode == Enum.KeyCode.W then
+            moveVector = moveVector + Vector3.new(0, 0, 1)
+        elseif input.KeyCode == Enum.KeyCode.S then
+            moveVector = moveVector + Vector3.new(0, 0, -1)
+        elseif input.KeyCode == Enum.KeyCode.A then
+            moveVector = moveVector + Vector3.new(-1, 0, 0)
+        elseif input.KeyCode == Enum.KeyCode.D then
+            moveVector = moveVector + Vector3.new(1, 0, 0)
+        elseif input.KeyCode == Enum.KeyCode.E then
+            moveVector = moveVector + Vector3.new(0, 1, 0)
+        elseif input.KeyCode == Enum.KeyCode.Q then
+            moveVector = moveVector + Vector3.new(0, -1, 0)
+        end
     end
 end)
 
 UserInputService.InputEnded:Connect(function(input, processed)
     if processed or not freecamEnabled then return end
-    if input.KeyCode == Enum.KeyCode.W then
-        moveVector = moveVector - Vector3.new(0, 0, -1)
-    elseif input.KeyCode == Enum.KeyCode.S then
+    if input.KeyCode == Enum.KeyCode.Z then
+        rollingLeft = false
+    elseif input.KeyCode == Enum.KeyCode.X then
+        rollingRight = false
+    elseif input.KeyCode == Enum.KeyCode.W then
         moveVector = moveVector - Vector3.new(0, 0, 1)
+    elseif input.KeyCode == Enum.KeyCode.S then
+        moveVector = moveVector - Vector3.new(0, 0, -1)
     elseif input.KeyCode == Enum.KeyCode.A then
         moveVector = moveVector - Vector3.new(-1, 0, 0)
     elseif input.KeyCode == Enum.KeyCode.D then
@@ -94,10 +101,29 @@ end)
 
 RunService.RenderStepped:Connect(function(deltaTime)
     if freecamEnabled then
+            
+        if rollingLeft then
+            roll = roll + rollSpeed * deltaTime
+        elseif rollingRight then
+            roll = roll - rollSpeed * deltaTime
+        end
+
+        local rotationCFrame = CFrame.Angles(
+            math.rad(rotation.X),
+            math.rad(rotation.Y),
+            math.rad(roll)
+        )
+
+        local forward = rotationCFrame.LookVector
+        local right = rotationCFrame.RightVector
+
+        forward = Vector3.new(forward.X, 0, forward.Z).Unit
+        right = Vector3.new(right.X, 0, right.Z).Unit
+
+        local moveDirection = (right * moveVector.X) + (Vector3.new(0, 1, 0) * moveVector.Y) + (forward * moveVector.Z)
         local cameraCFrame = Camera.CFrame
-        local moveDirection = (cameraCFrame.RightVector * moveVector.X) + (cameraCFrame.UpVector * moveVector.Y) + (cameraCFrame.LookVector * moveVector.Z)
         local newPosition = cameraCFrame.Position + moveDirection * moveSpeed * deltaTime
-        local rotationCFrame = CFrame.Angles(math.rad(rotation.X), math.rad(rotation.Y), 0)
+
         Camera.CFrame = CFrame.new(newPosition) * rotationCFrame
     end
 end)
