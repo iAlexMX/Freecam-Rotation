@@ -30,6 +30,17 @@ Mouse Movement: Rota la cámara según el movimiento del mouse.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 Freecam Rotation
 
 Keybinds:
