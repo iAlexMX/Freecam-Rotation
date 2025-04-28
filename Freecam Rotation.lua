@@ -1,5 +1,3 @@
--- LocalScript (StarterPlayerScripts)
-
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Camera = workspace.CurrentCamera
@@ -8,8 +6,8 @@ local player = Players.LocalPlayer
 
 local freecamEnabled = false
 
-local moveSpeed = 20 -- Velocidad de movimiento
-local mouseSensitivity = 0.2 -- Sensibilidad del ratón
+local moveSpeed = 20
+local mouseSensitivity = 0.2
 
 local moveVector = Vector3.new()
 local rotation = Vector2.new()
@@ -31,7 +29,6 @@ local function setCharacterAnchored(state)
     end
 end
 
--- Activar/desactivar Freecam con la tecla "C"
 UserInputService.InputBegan:Connect(function(input, processed)
     if processed then return end
     if input.KeyCode == Enum.KeyCode.C then
@@ -41,7 +38,6 @@ UserInputService.InputBegan:Connect(function(input, processed)
             Camera.CameraType = Enum.CameraType.Scriptable
             lockMouse()
 
-            -- Encontrar personaje y anclarlo
             character = player.Character
             if character then
                 humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
@@ -51,13 +47,11 @@ UserInputService.InputBegan:Connect(function(input, processed)
             Camera.CameraType = Enum.CameraType.Custom
             unlockMouse()
 
-            -- Desanclar personaje
             setCharacterAnchored(false)
         end
     end
 end)
 
--- Movimiento de Freecam
 UserInputService.InputBegan:Connect(function(input, processed)
     if processed or not freecamEnabled then return end
     if input.KeyCode == Enum.KeyCode.W then
@@ -92,14 +86,12 @@ UserInputService.InputEnded:Connect(function(input, processed)
     end
 end)
 
--- Movimiento del mouse
 UserInputService.InputChanged:Connect(function(input)
     if freecamEnabled and input.UserInputType == Enum.UserInputType.MouseMovement then
         rotation = rotation + Vector2.new(-input.Delta.y * mouseSensitivity, -input.Delta.x * mouseSensitivity)
     end
 end)
 
--- Actualizar cámara
 RunService.RenderStepped:Connect(function(deltaTime)
     if freecamEnabled then
         local cameraCFrame = Camera.CFrame
