@@ -1,4 +1,4 @@
-# 🎥 Freecam Cinematic – Cámara Libre para Roblox
+# 🎥 Freecam Cinematic/Rotation – Cámara Libre para Roblox
 
 Este script activa un modo **Freecam Cinemático** en Roblox, permitiéndote explorar libremente el entorno con una cámara completamente controlable, sin mover al personaje del juego. Perfecto para crear cinemáticas, screenshots o simplemente disfrutar de una vista diferente del mundo del juego.
 
