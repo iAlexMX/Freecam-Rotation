@@ -2,6 +2,12 @@
 
 Este script activa un modo **Freecam Cinemático** en Roblox, permitiéndote explorar libremente el entorno con una cámara completamente controlable, sin mover al personaje del juego. Perfecto para crear cinemáticas, screenshots o simplemente disfrutar de una vista diferente del mundo del juego.
 
+## Freecam Cinematic
+<pre>loadstring(game:HttpGet("https://raw.githubusercontent.com/iAlexMX/Freecam-Rotation-and-Cinematic/refs/heads/main/Freecam%20Cinematic%20by%20iAlexMX.lua"))()</pre>
+
+## Freecam Rotaton
+<pre>loadstring(game:HttpGet("https://raw.githubusercontent.com/iAlexMX/Freecam-Rotation-and-Cinematic/refs/heads/main/Freecam%20Rotation%20by%20iAlexMX.lua"))()</pre>
+
 ---
 
 ## ✨ Características
