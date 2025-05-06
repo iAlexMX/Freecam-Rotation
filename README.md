@@ -57,5 +57,5 @@ Este script activa un modo **Freecam Cinemático** en Roblox, permitiéndote exp
 
 ## 🧑‍💻 Autor
 
-Script desarrollado por **iAlexMX**  
+Script desarrollado por **AlexScriptX**  
 🎬 Diseñado para creadores de contenido y jugadores curiosos que buscan nuevas perspectivas.
